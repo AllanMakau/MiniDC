@@ -1,0 +1,12 @@
+[controllers]
+ansible ansible_connection=local
+
+[miniDC]
+db ansible_ssh_host=172.17.177.21 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/db/virtualbox/private_key
+web ansible_ssh_host=172.17.177.22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web/virtualbox/private_key
+
+[databases]
+db ansible_ssh_host=172.17.177.21 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/db/virtualbox/private_key
+
+[webservers]
+web ansible_ssh_host=172.17.177.22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web/virtualbox/private_key
