@@ -19,24 +19,47 @@
 
 - hosts: databases
   remote_user: vagrant
+  become: yes
   tasks:
     - name: Criando Arquivo Info
       lineinfile:
         path: /tmp/info
         line: SERVIDOR DE BANCO DE DADOS MYSQL
         create: yes
+        
+    - name: Instalando MYSQL
+      apt: 
+        state: present
+        update_cache: yes
+        pkg: 
+          - mysql-server 
     
       
       
 - hosts: webservers
   remote_user: vagrant
+  become: yes
   tasks:
     - name: Criando Arquivo Info
       lineinfile:
         path: /tmp/info
         line: SERVIDOR DO BLOG WORDPRESS
         create: yes
-   
-
-
-       
+    - name: Instalando Apache e PHP
+      apt: 
+       state: present
+       update_cache: yes
+       pkg: 
+         - apache2
+         - php-curl
+         - php-gd
+         - php-mbstring
+         - php-xml
+         - php-xmlrpc
+         - php-soap
+         - php-intl
+         - php-zip
+         - php
+         - libapache2-mod-php
+         - php-mysql
+  
