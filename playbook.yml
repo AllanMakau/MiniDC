@@ -5,3 +5,38 @@
     - name: Set timezone to  SP/BR
       timezone:
         name: America/Sao_Paulo    
+        
+        
+- hosts: controllers
+  remote_user: vagrant
+  tasks:
+    - name: Criando Arquivo Info
+      lineinfile:
+        path: /tmp/info
+        line: SERVIDOR ANSIBLE CONTROLLER
+        create: yes
+        
+
+- hosts: databases
+  remote_user: vagrant
+  tasks:
+    - name: Criando Arquivo Info
+      lineinfile:
+        path: /tmp/info
+        line: SERVIDOR DE BANCO DE DADOS MYSQL
+        create: yes
+    
+      
+      
+- hosts: webservers
+  remote_user: vagrant
+  tasks:
+    - name: Criando Arquivo Info
+      lineinfile:
+        path: /tmp/info
+        line: SERVIDOR DO BLOG WORDPRESS
+        create: yes
+   
+
+
+       

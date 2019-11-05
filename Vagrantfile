@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
 	   
 	   
 	   
-	   config.vm.provision :ansible_local do |controllerAnsible|
+	   ansible.vm.provision :ansible_local do |controllerAnsible|
 			controllerAnsible.install_mode = "default"
 			controllerAnsible.playbook = "playbook.yml"
 			controllerAnsible.verbose  = true
