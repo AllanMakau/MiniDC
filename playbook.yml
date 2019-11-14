@@ -26,6 +26,12 @@
         path: /tmp/info
         line: SERVIDOR DE BANCO DE DADOS MYSQL
         create: yes
+
+    - name: Especifica o usuario root antes de instalar
+      debconf: name='mysql-server' question='mysqlserver/root_password' value='123' vtype='password'
+
+    - name: Confirmando a Senha de Administrador do Mysql
+      debconf: name='mysql-server' question='mysql-server/root_password_again' value='123' vtype='password'
         
     - name: Instalando MYSQL
       apt: 
@@ -33,9 +39,35 @@
         update_cache: yes
         pkg: 
           - mysql-server 
+          - python-pymysql
+          
+    - name: Criando um database
+      mysql_db: 
+       name: wordpress 
+       state: present
+       login_user: root
+       login_password: 123
     
-      
-      
+    - name: Criando o usuario do banco
+      mysql_user: 
+        name: wordpress
+        password: impacta
+        priv: '*.*:ALL'
+        state: present
+        host: 172.17.177.22
+        login_user: root
+        login_password: 123
+
+
+    - name: Liberando o MySql para conexões
+      lineinfile: 
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: bind-address = 0.0.0.0
+      notify: 
+        - restart mysql
+        
+         
 - hosts: webservers
   remote_user: vagrant
   become: yes
@@ -62,4 +94,14 @@
          - php
          - libapache2-mod-php
          - php-mysql
-  
+         
+- handlers: 
+    - name: restart mysql
+      service: 
+        name: mysql
+        state: restarted
+
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted

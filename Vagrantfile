@@ -1,6 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$script = <<-SCRIPT
+
+echo instalando python........
+sudo apt-get install python-mysqldb
+SCRIPT
+
 Vagrant.configure("2") do |config|
 
 
@@ -30,6 +36,7 @@ Vagrant.configure("2") do |config|
 		   v.memory = 512
 		   v.cpus = 1
 	   end
+	   #db.vm.provision "shell", inline: $script
    end
  
 
