@@ -28,7 +28,7 @@
         create: yes
 
     - name: Especifica o usuario root antes de instalar
-      debconf: name='mysql-server' question='mysqlserver/root_password' value='123' vtype='password'
+      debconf: name='mysql-server' question='mysql-server/root_password' value='123' vtype='password'
 
     - name: Confirmando a Senha de Administrador do Mysql
       debconf: name='mysql-server' question='mysql-server/root_password_again' value='123' vtype='password'
@@ -69,7 +69,7 @@
         
     - name: restart mysql
       service: 
-      name: restart mysql     
+        name: restart mysql     
         state: restarted
          
 - hosts: webservers
@@ -99,8 +99,13 @@
          - libapache2-mod-php
          - php-mysql
          
-  handlers: 
+  handlers:
     - name: restart apache
       service:
         name: apache2
         state: restarted
+
+    - name: restart mysql
+      service:
+        name: mysql
+        state: restarted 

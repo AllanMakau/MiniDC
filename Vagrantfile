@@ -15,7 +15,8 @@ Vagrant.configure("2") do |config|
    config.vm.define "web" do |web|
 	   web.vm.box = "ubuntu/bionic64"
 	   web.vm.hostname = "blog"
-	   web.vm.network "private_network", ip: "172.17.177.22"  
+	   web.vm.network "private_network", ip: "172.17.177.22"
+	   web.vm.network :forwarded_port, guest: 80, host: 8080	   
 	   
 	   web.vm.provider "virtualbox" do |v|
 		   v.memory = 512
